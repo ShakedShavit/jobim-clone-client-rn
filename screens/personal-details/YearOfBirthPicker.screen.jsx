@@ -1,10 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-export default function PersonalDetailsScreen() {
+export default function YearOfBirthPicker() {
     return (
         <View>
-            <Text>PersonalDetails</Text>
+            <Text></Text>
         </View>
     );
 }

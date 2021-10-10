@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import PersonalDetailsScreen from "../../screens/PersonalDetails.screen";
 import NotificationsScreen from "../../screens/Notifications.screen";
 import MyJobsScreen from "../../screens/MyJobs.screen";
 import FindJobsScreen from "../../screens/FindJobs.screen";
@@ -11,7 +10,10 @@ import DrawerContent from "../../components/DrawerContent.component";
 import { useDispatch } from "react-redux";
 import { _retrieveUserData } from "../../asyncStorage";
 import { signInAction } from "../../redux/store/actions/user.action";
-import { Button } from "react-native";
+import { Button, Text } from "react-native";
+import PersonalDetailsNavigatorStack, {
+    personalDetailsScreenOptions,
+} from "../stack/PersonalDetails.navigator.stack";
 
 const Drawer = createDrawerNavigator();
 
@@ -54,12 +56,10 @@ export default MainNavigator = ({ navigation }) => {
             >
                 <Drawer.Screen
                     name="PersonalDetails"
-                    component={PersonalDetailsScreen}
+                    component={PersonalDetailsNavigatorStack}
                     options={({ navigation, route }) => ({
                         title: "הפרטים שלי",
-                        headerRight: () => {
-                            return <Button title="Personal" />;
-                        },
+                        ...personalDetailsScreenOptions(navigation, route),
                     })}
                 />
                 <Drawer.Screen

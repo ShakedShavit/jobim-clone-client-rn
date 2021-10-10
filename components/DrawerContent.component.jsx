@@ -1,19 +1,11 @@
 import React, { useEffect } from "react";
-import {
-    Dimensions,
-    Image,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
-} from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import colors from "../constants/Colors";
 import MenuIcon from "./MenuIcon.component";
 import { useSelector } from "react-redux";
 import Separator from "./shared/Separator.component";
-
-const windowHeight = Dimensions.get("window").height;
+import windowDimensions from "./utils/getWindowDimensions.utils";
 
 export default function DrawerContent(props) {
     const userState = useSelector((state) => state.user);
@@ -93,7 +85,7 @@ export default function DrawerContent(props) {
                     labelStyle={styles.drawerItemLabel}
                 />
 
-                <View style={styles.separator}></View>
+                <Separator />
 
                 <DrawerItem
                     icon={() => (
@@ -113,7 +105,7 @@ export default function DrawerContent(props) {
                     }}
                 />
 
-                <View style={styles.separator}></View>
+                <Separator />
 
                 <DrawerItem
                     icon={() => (
@@ -182,16 +174,11 @@ export default function DrawerContent(props) {
 }
 
 const styles = StyleSheet.create({
-    separator: {
-        width: "90%",
-        borderColor: colors.gray,
-        borderBottomWidth: 0.7,
-    },
     drawerItem: {
         paddingLeft: 20,
     },
     drawerItemBottom: {
-        padding: 10,
+        padding: 5,
     },
     drawerItemLabel: {
         fontSize: 20,
@@ -208,7 +195,7 @@ const styles = StyleSheet.create({
     imgContainer: {
         position: "absolute",
         width: "100%",
-        height: windowHeight,
+        height: windowDimensions.height,
         top: 0,
         alignItems: "center",
     },
@@ -217,7 +204,7 @@ const styles = StyleSheet.create({
         height: 50,
         resizeMode: "stretch",
         position: "absolute",
-        bottom: 10,
+        bottom: 40,
     },
     drawerTopSection: {
         alignItems: "center",

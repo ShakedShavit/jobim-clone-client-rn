@@ -7,6 +7,7 @@ export default colors = {
     lightPurple: "#cc00cc",
     bordaux: "#cc0066",
     gray: "#606060",
+    lightGray: "#e0e0e0",
     teal: "#006666",
     lightGreen: "#00ff00",
     green: "#006633",

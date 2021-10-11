@@ -1,36 +1,58 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import {
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
+} from "react-native";
 import PersonalDetailsScreenLayout from "./PersonalDetailsScreenLayout.screen";
+import citiesArray from "../../data/citiesArray.json";
+import Dropdown from "../../components/shared/Dropdown.component";
 
 export default function CityOfResidencePicker() {
-    const [city, setCity] = useState("");
+    const [chosenCity, setChosenCity] = useState("");
     const [cityInputText, setCityInputText] = useState("");
 
     const onCityInputChange = (text) => {
+        setChosenCity("");
+
+        text = text.replace(/\s+/g, " ");
         setCityInputText(text);
-        if (text.length < 2) return;
     };
 
     const cancelInput = () => {
         setCityInputText("");
-        setCity("");
+        setChosenCity("");
     };
 
     return (
         <PersonalDetailsScreenLayout>
             <Text style={styles.topText}>עיר המגורים שלך</Text>
-            <TextInput
-                style={styles.cityInput}
-                placeholder="עיר מגורים"
-                onChangeText={onCityInputChange}
-                value={cityInputText}
-                onFocus={() => {
-                    setLastNameInputFocusStyle(inputFocusStyle);
-                }}
-                onBlur={() => {
-                    setLastNameInputFocusStyle("");
-                }}
-            ></TextInput>
+            <View style={styles.inputContainer}>
+                <TextInput
+                    style={styles.cityInput}
+                    placeholder="עיר מגורים"
+                    onChangeText={onCityInputChange}
+                    value={!!chosenCity ? chosenCity : cityInputText}
+                ></TextInput>
+                {cityInputText.trim() !== "" && (
+                    <TouchableOpacity
+                        activeOpacity={1}
+                        style={styles.deleteBtn}
+                        onPress={cancelInput}
+                    >
+                        <Text style={styles.deleteBtnText}>X</Text>
+                    </TouchableOpacity>
+                )}
+
+                <Dropdown
+                    optionsArr={citiesArray}
+                    setChosenOption={setChosenCity}
+                    inputVal={cityInputText}
+                />
+            </View>
         </PersonalDetailsScreenLayout>
     );
 }
@@ -43,9 +65,12 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     topText: { marginTop: 10 },
+    inputContainer: {
+        width: "100%",
+        position: "relative",
+    },
     cityInput: {
         backgroundColor: colors.lightGray,
-        width: "100%",
         paddingHorizontal: 10,
         paddingVertical: 15,
         borderRadius: 5,
@@ -53,5 +78,20 @@ const styles = StyleSheet.create({
         fontSize: 17,
         textAlign: "center",
         marginTop: 20,
+    },
+    deleteBtn: {
+        position: "absolute",
+        right: 10,
+        top: "50%",
+        backgroundColor: colors.orange,
+        borderRadius: 50,
+        color: "white",
+    },
+    deleteBtnText: {
+        marginHorizontal: 5,
+        marginVertical: 0.7,
+        color: "white",
+        fontWeight: "bold",
+        fontSize: 12,
     },
 });
